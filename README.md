@@ -1,6 +1,5 @@
-# Quasar App (qwitter)
-
-A Quasar Framework app
+# Vue js quasar framework (chatter)
+    a test application for chatting and remote rpc
 
 ## Install the dependencies
 ```bash
