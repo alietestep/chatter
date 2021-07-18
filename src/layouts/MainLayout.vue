@@ -13,7 +13,9 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered width='250'>
+    <q-drawer class="bg-grey-3" show-if-above  v-model="leftDrawerOpen" side="left" bordered width='150'>
+
+      
       <!-- drawer content -->
       <q-icon class='q-pa-md' name="fas fa-dove" size='md' color='primary'  />
       <span class='text-weight-bold '>Chatter</span>
