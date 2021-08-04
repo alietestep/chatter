@@ -1,0 +1,519 @@
+# Qwitter with quasar-vue js and firebase
+## prerequits	
+	download and install vscode	
+	split html attribute vscode extention
+
+## instal mode js	
+	apt-get install node.js or doenload LTS form node.js.org
+
+	https://tecadmin.net/install-latest-nodejs-npm-on-ubuntu/
+		curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - 
+		sudo apt-get update
+		sudo apt-get install nodejs 
+		node -v  
+## install quasar cli 	
+	npm install -g @quasar/cli
+## create a quasar project directory
+	quasar create qwitter
+		qwitter
+		project name 			-->> Qwitter
+		description 			--> enter
+		Auther 					-->> alietestep
+		componenets strategy 	-->> auto import....
+		features 				-->> disable ESLint
+									dont enable any other options 
+		proj dependencies 		-->> npm
+
+## run quasar
+	cd qwitter
+	quasar dev
+
+## directory structure
+	quasar.conf.js 	
+		peoject configuration like install icon libs - animations and plugins -  vue router history mode
+		config modes like ssr, pwa
+	src dir 					# main directory 
+		index.template.html 	# where vue app is 
+		App.vue  				# root vue - loads layout components
+		Layout 					# layouts here 
+			mainLayout.vue 		# main layout like header-sidebars 
+
+		pages  					# all pages are here 
+		 	erro404.vue
+		 	index.vue 			# main page 
+		 assets 				# can contains images , ...
+		 boot  					# initial a plugin or package befor our app startsup
+		 components 			# place all vue components here 
+		 css 					
+		 	app.sass 			# global css file 
+		 	quasar.variables.sass 		# customize color of theme 
+		 router 
+		 	index.js 
+		 	routes.js 			# config all routes (path to load a page when a GET request comes ) 
+
+
+
+	 public 				# css files and images 			
+	 	icons 
+	 	favicon	
+## chaning layot  --Internet--
+	quasar.dev -> layput builder 
+	build a layout 
+	generate code and copy code
+	src/layputs/MainLayouts.vue
+		paste code and save
+## header 
+### change primary color 
+	src/css/quasar.variables.sass
+		$primray 	:#1da1f2 			# grab color code form quasar.dev 
+### remove quasar icon	
+	layouts/mainLayout.vue
+		main header is in <1-header> tag
+		remove <q-avatra> for removing quasar icon
+### change title
+	layouts/mainLayout.vue
+	<q-toolbar-title class='text-weight-bold'>
+		Qwitter
+	</q-toolbar-title>
+### remove rightbar
+	layouts/mainLayout.vue
+	<q-btn dense .... >
+## main color
+	setting page main color background t white and texts to black 
+	layouts/mainLayout.vue
+		<q-header class='bg-wgite text-black'
+## left drawer
+	layouts/mainLayout.vue
+	<q-drawer show-if-above v-model='right' side='right' bordered>
+
+	</q-drawer>
+### left drawer add icon
+	layouts/mainLayout.vue
+	<q-drawer show-if-above v-model='right' side='right' bordered>
+		<q-icon name='font_download' />
+	</q-drawer>
+
+### fontawsom icons
+	quasar.conf.js
+	icons > exteras: [
+		'fontawesome-v5'
+	]
+
+	layouts/mainLayout.vue
+	<q-drawer show-if-above v-model='left' side='left' bordered>
+		<q-icon class='q-pa-md' name='fas fa-dove' size='lg' color='primary'/>
+	</q-drawer>
+### navigation items
+	<q-drawer show-if-above v-model='left' side='left' :width='283'>
+		<q-icon class='q-pa-md' name='fas fa-dove' size='lg' color='primary'/>
+		
+
+		<q-list bordered>
+			<q-item to='/' clickable v-tripple>
+				<q-item-section avatar>	
+					<q-icon  name='home' size=md/>
+				</q-item-section>
+				<q-item-section class='text-h6 text-weight-bold'>Home</q-item-section>
+			</q-item>
+		</q-list>
+
+
+
+		<q-list bordered>
+			<q-item to='/about' clickable v-tripple>
+				<q-item-section avatar>	
+					<q-icon c name='help' size=md/>
+				</q-item-section>
+				<q-item-section class='text-h6 text-weight-bold'>Home</q-item-section>
+			</q-item>
+		</q-list>
+
+
+
+	</q-drawer>
+## rightside drawer
+	<q-drawer show-if-above v-model='right' side='right' :width='283'>
+		<q-input placeholder='Search Qwitter' class='q-ma-md ' oulined rounded v-model='text' dense>
+		# 																						|
+		#																				makes smaller
+			<template v-slot:prepend>
+				<q-icon name='search' />	
+			</template>
+		</q-input>
+	</q-drawer>
+### adding items to right drawer
+	<q-list padding>
+		<q-item>
+			<q-item-section>
+				<q-item-label overline class='text-grey'>OVERLINE</q-item-label>
+				<q-item-label class='text-weight-bold'>single line item</q-item-label>
+				<q-item-label caption>all text for item can comes here with no charecture limits lorem ipsum bla blha blah</q-item-label>
+			</q-item-section>
+			<q-item-section>
+				<q-item-label caption>5 min ago</q-item-label>
+			</q-item-section>			
+		</q-item>
+	</q-list>
+## title for mobile 
+	layouts/mainLayout.vue
+	<q-toolbar-title class='text-weight-bold'>
+		<span class='gt-sm'>Qwitter</span>
+		<q-icon class='header-icon q-pa-md lt-md' name='fas fa-dove' size='sm' color='primary'/>
+		# 						|> show if screen size is less than medium
+	</q-toolbar-title>
+
+
+	# bottom of files
+	<style lang='sass'>
+	.header-icon	
+		position: absolute
+		bottom: 0
+		left: 50%
+		transform: translateX(-50%)
+	</style>
+## pages and routes
+### home page
+	 src/pages/index.vue
+	 	<template>
+	 	<q-page>
+	 		<h5>Home</h5>
+	 	</q-page>
+	 	</template>
+
+	 	<script>
+ 			export default {
+ 				name: 'PageHome'
+ 			}
+	 	</script>
+### add routes and ppages 
+	src/router/routes.js
+		const routes = [
+		  {
+		    path: '/',
+		    component: () => import('layouts/MainLayout.vue'),
+		    children: [
+		      { path: '', component: () => import('pages/Index.vue') },
+		      { path: '', component: () => import('pages/about.vue') },
+		      { path: '', component: () => import('pages/contact.vue') }
+		    ]
+		  },
+
+		  // Always leave this as last one,
+		  // but you can also remove it
+		  {
+		    path: '/:catchAll(.*)*',
+		    component: () => import('pages/Error404.vue')
+		  }
+		]
+
+		export default routes
+
+	src/pages/index.vue
+	src/pages/abou.vue
+	src/pages/contact.vue
+		<template>
+		  <q-page class="flex flex-center">
+		  	<h5>about</h5>
+		  </q-page>
+		</template>
+
+		<script>
+		import { defineComponent } from 'vue';
+
+		export default defineComponent({
+		  name: 'PageAbout'
+		})
+		</script>
+
+
+
+
+# Firebase DB
+## setting up 
+	firefox: http://firebase.google.com 
+	sign up 
+	goto console 
+		project name => qweeter 
+		disable google analytics
+		create project 
+	build -> cloud firesore
+		create database 
+		start in test mode 
+		enable
+### createing content in db
+	firefox: http://firebase.google.com -> cloud firestore
+	+start collection
+		collection id => qweets
+			document ID 	-> autoid
+			field => content 		type => string 	 	value => add content to be show in  as qweet
+			field => date 			type => number 		value =>  16111525511
+
+		add some documents like this
+### firebase clientisde
+	firebase console 
+	project overview -> add app(web)
+		register app ->qweetter
+		register app
+
+	copy script tags
+
+	in vscode/terminal 
+		nm install --save firebase
+
+		quasar new boot firebase
+	
+	vi quasar.conf.js
+		...
+		boot: [
+		'firebase'
+		]
+		...
+	
+	vi boot/firebase.js
+		import firebase from 'firebase/app'
+		import 'firebase/firestore'
+
+		const firebaseConfig = {
+			*********** pase copied script tags here *******************
+		}
+		firebase.initializeapp(firebaseConfig)
+		let db = firebase.firestore()
+		export default db
+
+		quasar dev
+### use data from firebase db 
+	vi pages//pageHome.vue
+		...
+		<script>
+		import db from 'src/boot/firebase'
+
+		export defaults {
+			data() {...},
+			methods: {...},
+			filters: {...},
+			## ***********************
+			mounted() {
+				db.collection('qweets').orderBy('date').onSnapshot(snapshot => {
+					snapshot.docChanges().forEach(change => {
+						let qweetChange = change.doc.data()
+						if (change.type=='added') {
+							### console.log('new qweet: ', qweetChange()
+							### add qweets from firebase to be loaded on page
+							this.qweet.unshift(qweetChange)
+						}
+						if (change.type=='modified') {
+							console.log('new modified', qweetChange())
+						}
+						if (change.type=='removed') {
+							### console.log('removed: ', qweetChange())
+						}
+						})
+				}	
+			}
+		}
+		...
+### add qweet from front end to firebase db 
+	vi pages/chat.vue
+
+		<scripts>
+		...
+			methods: {
+				...
+				adNewQweet() {
+					let newQweet = {
+						content: this.newTweetContent,
+						date: Date.now()
+					}
+					// this.qweets.unshift(newQweet)
+					**********************************
+					###### quasar generate a new id for each qweet ######
+					db.collection('qweets').add(newQweet).then(function(docRef)) {
+						console.log('id', docRef.id)
+					}).catch(function(error) {
+						console.log('error', error)
+					})
+
+					this.newQweetContent = ''
+				}
+
+			}
+		</scripts>
+### delete qweets from db from drontend
+	vi pages//pageHome.vue
+		...
+		<q-item  v-for='qweet in qweets' :key=qweet.id ...
+		...
+
+
+
+		...
+		<script>
+		import db from 'src/boot/firebase'
+
+		export defaults {
+			data() {...},
+			methods: {...},
+			filters: {...},
+			## ***********************
+			mounted() {
+				db.collection('qweets').orderBy('date').onSnapshot(snapshot => {
+					snapshot.docChanges().forEach(change => {
+						let qweetChange = change.doc.data()
+						qweetChange.id = change.doc.id
+						if (change.type=='added') {
+							### console.log('new qweet: ', qweetChange()
+							### add qweets from firebase to be loaded on page
+							this.qweet.unshift(qweetChange)
+						}
+						if (change.type=='modified') {
+							### console.log('new modified', qweetChange())
+							let index = this.qweets.findIndex(qweet => qweet.id === qweetChange.id)
+
+						}
+						if (change.type=='removed') {
+							### console.log('removed: ', qweetChange())
+							### remove from qweets array
+							let index = this.qweets.findIndex(qweet => qweet.id === qweetChange.id)
+							this.qweets.splice(index, 1)
+							### remove from database 
+
+						}
+						})
+				}	
+			}
+		}
+
+
+		<scripts>
+		...
+			methods: {
+				...
+				adNewQweet() {
+					...
+				},
+				#### ************************
+				deleteQweet(qweet) {
+					db.collection('qweets').doc(qweet.id).delete().then(function() {
+						console.log('deleted')
+						}).catch(function(error()
+							console.error('error removing document :', error)
+						))
+				}
+			}
+		</script>
+### like qweet
+	vi pages/chat.vue
+		...
+			<q-btn :icon='qweet.liked ? 'fas fa-heart' : fa fa-heart'  
+				:color='qweet.liked ? 'pink' : 'grey''
+				size='sm' flat round />
+		...
+
+		<scripts>
+		....
+			methods: {
+				addNewQweet() {
+					let newQweet = {
+						content: this.newTweetContent,
+						date: Date.now(),
+						liked: false
+					}
+				}
+			}
+
+		...
+
+
+		<script>
+		import db from 'src/boot/firebase'
+
+		export defaults {
+			data() {...},
+			methods: {...},
+			filters: {...},
+			mounted() {
+				db.collection('qweets').orderBy('date').onSnapshot(snapshot => {
+					snapshot.docChanges().forEach(change => {
+						let qweetChange = change.doc.data()
+						qweetChange.id = change.doc.id
+						if (change.type=='added') {
+							### console.log('new qweet: ', qweetChange()
+							### add qweets from firebase to be loaded on page
+							this.qweet.unshift(qweetChange)
+						}
+						if (change.type=='modified') {
+							### console.log('new modified', qweetChange())
+							### ********************************************
+							let index = this.qweets.findIndex(qweet => qweet.id === qweetChange.id)
+							Object.assign(this.qweets[index], qweetChange)
+
+						}
+						if (change.type=='removed') {
+							### console.log('removed: ', qweetChange())
+							### remove from qweets array
+							let index = this.qweets.findIndex(qweet => qweet.id === qweetChange.id)
+							this.qweets.splice(index, 1)
+							### remove from database 
+
+						}
+						})
+				}	
+			}
+		}
+
+
+			<q-btn @click="toggleLiked(qweet)"
+						:icon='qweet.liked ? 'fas fa-heart' : fa fa-heart'  
+
+		<scripts>
+			..
+			methods: {
+				addNewQweet() {
+
+					},
+				deleteQweet() {
+
+					},
+				toggleLiked(qweet) {
+					db.collection('qweets').doc(qweet.id).update({
+						#### if liekd, dislike elif disliked->liekd
+						liked: !qweet.liked
+						}).then(function(){
+							console.log('sucessfully updated')
+						}).catch(function(error){
+							console.error('error: ', error)
+						})
+				}
+			}
+		</scripts>
+
+### keep alive
+	if we change pages firebase hook will be messed up 
+
+	MainLayout.vue
+		...
+		<q-page-container>
+			<keep-alive>
+				<router-view / >
+			</keep-alive>
+		</q-page-container>
+# Deploy with Electron
+	mac			-->> quasar dev -m electron
+	
+	windows 	-->> 
+		vi quasar.conf.js 
+			electron: {
+				...
+				packager: {
+					platform: 'win32'
+				}
+			}
+		quasar build -m electron
+
+	ios 		-->> need mac and xcode
+		npm install -g cordova 
+		quasar def -m cordova -T ios
+
+	android 
+		download and install android studio 
+		quasar def -m cordova -T android
