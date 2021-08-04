@@ -1,6 +1,6 @@
 <template>
   <q-page class='relative-position'>
-    <q-scroll-area class= 'absolute fullscreen'>
+    <q-scroll-area class= 'absolute full-width full-height'>
       <q-card
         class="my-card text-white"
         style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)">
